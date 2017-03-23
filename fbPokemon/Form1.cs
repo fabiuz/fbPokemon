@@ -17,12 +17,11 @@ namespace fbPokemon
         {
             InitializeComponent();
         }
-
-        
-        // Na url abaixo, iremos retorna 100 pokemons por vez.
+                
+        // Na url abaixo, eu coloquei o limite de 100, ou seja, a chamada 
+        // chamada vai retornar 100 pokemons.
         const string url = "http://pokeapi.co/api/v2/pokemon?limit=100";
         
-
         public async Task<List<Result>> ObterPokemons()
         {
             List<Result> resultado = null;
@@ -32,6 +31,9 @@ namespace fbPokemon
                 var jsonConteudo = await httpClient.GetStringAsync(url);
 
                 // Aqui, é a raiz do conteúdo json.
+                // Quando eu chamo o json pela primeira vez, há uma propriedade 'next' que indica
+                // a url que retorna json do próximo pokemons.
+                // Então no loop abaixo no while, eu uso isto para ir para os próximos pokemons.
                 RootObject raizJson = JsonConvert.DeserializeObject<RootObject>(jsonConteudo);
 
                 // Zerar lista.
